@@ -29,7 +29,15 @@ Route::get('student/dashboard','foodItemsController@index');
 
 //cashier_Abhayan start//
 Route::get('cashier/dashboard', array('as' => 'get-dashboard', 'uses' => 'cashierController@getDashboard'));
+Route::post('cashier/dashboard', array('as' => 'post-dashboard-confirm', 'uses' => 'cashierController@postConfirmOrder'));
 //cashier_Abhayan end//
+
+//items_Aarooran start//
+Route::get('addItems', 'foodItemsController@index');
+Route::get('itemsDisplay', 'foodItemsController@displayItems');
+Route::post('create', 'foodItemsController@create');
+
+//items_Aarooran stop//
 
 
 
@@ -42,3 +50,5 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+

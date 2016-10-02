@@ -2,8 +2,8 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
+use Request;
+use DB;
 
 class foodItemsController extends Controller {
 
@@ -14,7 +14,7 @@ class foodItemsController extends Controller {
 	 */
 	public function index()
 	{
-		return view();
+        return view("foodItems.addFootItems");
 	}
 
 	/**
@@ -24,7 +24,36 @@ class foodItemsController extends Controller {
 	 */
 	public function create()
 	{
-		//
+        $num=rand(1,500);
+        $itemID="BA".$num;
+        $itemName=Request::input('itemName');
+        $itemPrice=Request::input('itemPrice');
+        $unitType=Request::input('itemType');
+        $quantity=Request::input('quantity');
+        $imagePath="";
+        $isRemove=0;
+        date_default_timezone_set('Asia/Colombo');
+        $date_time=date("Y-m-d H:i:s");
+        if(Input::hasFile('orderImage'))
+        {
+            $file=Input::file('orderImage');
+            $file->move('Images',$file->getClientOriginalName());
+            $imagePath="Images/".$file->getClientOriginalName();
+
+        }
+        DB::table('food_items')->insert(
+            ['item_id' => $itemID,
+                'item_name'=>$itemName,
+                'unit_price'=>$itemPrice,
+                'unit_type'=>$unitType,
+                'available_quantity'=>$quantity,
+                'item_image_path'=>$imagePath,
+                'is_remove'=>$isRemove,
+                'created_at'=>$date_time
+
+            ]
+        );
+        return view("foodItems.addFootItems");
 	}
 
 	/**
@@ -47,6 +76,17 @@ class foodItemsController extends Controller {
 	{
 		//
 	}
+
+    public function displayItems()
+    {
+        $items= DB::table('food_items')->get();
+
+        foreach ($items as $item)
+        {
+           // var_dump($item->item_name);
+        }
+        return view("foodItems.foodItemsView",compact('items'));
+    }
 
 	/**
 	 * Show the form for editing the specified resource.

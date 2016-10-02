@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Input;
+use App\Order;
+use Illuminate\Support\Facades\Redirect;
 
 class cashierController extends Controller {
 
@@ -13,10 +16,21 @@ class cashierController extends Controller {
     {
 
 
-
+    //view orders
         $newOrders = DB::table('orders')->where('status', 'new')
-            ->join('order_items', 'orders.order_id','=', 'order_items.order_id')
-            ->get();
+                    ->join('users', 'orders.customer_id','=','users.id')
+                    ->join('order_items', 'orders.order_id','=', 'order_items.order_id')
+                    ->join('food_items', 'order_items.item_id','=','food_items.item_id')
+                    ->get();
+        $inProgressOrders = DB::table('orders')->where('status', 'in-progress')
+                    ->join('users', 'orders.customer_id','=','users.id')
+                    ->join('order_items', 'orders.order_id','=', 'order_items.order_id')
+                    ->get();
+
+
+
+        $countInProgress = DB::table('orders')->where('status', 'in-progress')->count();
+
 
         $countNewOrders = DB::table('orders')->where('status', 'new')->count();
 
@@ -24,7 +38,36 @@ class cashierController extends Controller {
 
 
         return view('cashier_Abhayan.dashboard')->with('countNewOrders',$countNewOrders)
-                                                ->with('newOrders',$newOrders);
+                                                ->with('newOrders',$newOrders)
+                                                ->with('countInProgress',$countInProgress)
+                                                ->with('inProgressOrders',$inProgressOrders);
+    }
+
+    public function postConfirmOrder(){
+        if(Input::get('buttonProcessItem')){
+            $order = Order::Where('order_id','=',Input::get('hiddenOrderID'))->first();
+            $order->status='in-progress';
+            $order->save();
+
+            \Session::flash('flash_message', 'Order in-progress');
+            return Redirect::route('get-dashboard');
+        }
+        elseif(Input::get('buttonCancelItem'))
+        {
+            $order = Order::Where('order_id','=',Input::get('hiddenOrderID'))->first();
+            $order->status='cancelled';
+            $order->save();
+            \Session::flash('flash_message', 'Order cancelled');
+            return Redirect::route('get-dashboard');
+        }
+        else
+        {
+            $order = Order::Where('order_id','=',Input::get('hiddenOrderID'))->first();
+            $order->status='confirmed';
+            $order->save();
+            \Session::flash('flash_message', 'Order confirmed');
+            return Redirect::route('get-dashboard');
+        }
     }
 
 
