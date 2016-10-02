@@ -20,6 +20,7 @@ Route::get('home', 'HomeController@index');
 
 //cashier_Abhayan start//
 Route::get('cashier/dashboard', array('as' => 'get-dashboard', 'uses' => 'cashierController@getDashboard'));
+Route::post('cashier/dashboard', array('as' => 'post-dashboard-confirm', 'uses' => 'cashierController@postConfirmOrder'));
 //cashier_Abhayan end//
 
 
