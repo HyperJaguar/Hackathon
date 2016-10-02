@@ -17,6 +17,9 @@ Route::get('home', 'HomeController@index');
 
 
 
+//cashier_Abhayan start//
+Route::get('cashier/dashboard', array('as' => 'get-dashboard', 'uses' => 'cashierController@getDashboard'));
+//cashier_Abhayan end//
 
 
 Route::controllers([
