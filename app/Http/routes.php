@@ -16,6 +16,7 @@ Route::get('/', 'WelcomeController@index');
 Route::get('home', 'HomeController@index');
 
 Route::get('create-order', 'OrderController@index');
+Route::get('admin','Admin\AdminController@index');
 
 Route::post('create-order',array('as'=>'create-order','uses'=>'OrderController@addToCart'));
 

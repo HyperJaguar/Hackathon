@@ -14,7 +14,12 @@
     <div class="row">
         <div class="col-sm-3 col-md-6 col-lg-12" style="background-color:#fffff"; box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
             <div class ="panel panel-default">
-                testtt
+                New orders: {{$countNewOrders}}<br>
+
+
+                @foreach($newOrders as $newOrders)
+                        {{$newOrders->item_id}}<br>
+                @endforeach
             </div>
         </div>
     </div>

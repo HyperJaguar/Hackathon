@@ -1,32 +1,11 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use DB;
 
-class cashierController extends Controller {
-
-
-    public function getDashboard()
-    {
-
-
-
-        $newOrders = DB::table('orders')->where('status', 'new')
-            ->join('order_items', 'orders.order_id','=', 'order_items.order_id')
-            ->get();
-
-        $countNewOrders = DB::table('orders')->where('status', 'new')->count();
-
-
-
-
-        return view('cashier_Abhayan.dashboard')->with('countNewOrders',$countNewOrders)
-                                                ->with('newOrders',$newOrders);
-    }
-
+class AdminController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -35,7 +14,7 @@ class cashierController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		return view('admin.admin_main');
 	}
 
 	/**
