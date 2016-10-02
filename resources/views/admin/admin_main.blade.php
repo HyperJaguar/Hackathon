@@ -10,7 +10,17 @@
                         <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Add new Cashier/Students</div>
 
                         <div class="panel-body">
-                            <form role="form" method="POST" action="{{ url('/auth/register') }}">
+                            @if (count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form role="form" method="POST" action="{{ url('/admin') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="form-group">
                                     <label for="name">Name</label>
@@ -22,9 +32,11 @@
                                     <input class="form-control" name="itNumber" type="txt" placeholder="DIT Number">
                                 </div>
 
-                                <div class="form-group">
-                                    <label>Users Role</label>
-                                    <input name="role" id="role" class="form-control" list="roleList">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="role">Users Role</label>
+                                    <input name="role" id="role" class="form-control" list="roleList" aria-describedby="inputSuccess2Status">
+                                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                                    <span id="inputSuccess2Status" class="sr-only">(success)</span>
                                     <datalist id="roleList" >
                                         <option name="cashire">Cashire</option>
                                         <option name="student">Student</option>
@@ -52,7 +64,7 @@
                                     </div>
                                 </div>
 
-                                <input class="btn btn-success" type="submit" value="Confirm">
+                                <input class="form-control btn btn-success" type="submit" value="Confirm">
 
                             </form>
                         </div>

@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration {
 		});
 		$data=array("name" =>"wijeram admin","email" =>"admin@gmail.com","password"=>bcrypt("admin123"),"role"=> "admin" );
 		User::create($data);
-        $data1=array("name" =>"Felix cashire","email" =>"cash@gmail.com","password"=>bcrypt("cash123"),"role"=> "cashire" );
+        $data1=array("name" =>"Felix cashire","email" =>"cash@gmail.com","password"=>bcrypt("cash123"),"role"=> "cashier" );
         User::create($data1);
         $data2=array("name" =>"Sanchayan student","email" =>"student@gmail.com","password"=>bcrypt("student123"),'itNumber'=> 'IT13565477',"role"=> "student" );
         User::create($data2);
