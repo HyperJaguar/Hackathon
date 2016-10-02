@@ -22,8 +22,17 @@ Route::get('home', 'HomeController@index');
 Route::get('cashier/dashboard', array('as' => 'get-dashboard', 'uses' => 'cashierController@getDashboard'));
 //cashier_Abhayan end//
 
+//items_Aarooran start//
+Route::get('addItems', 'foodItemsController@index');
+Route::get('itemsDisplay', 'foodItemsController@displayItems');
+Route::post('create', 'foodItemsController@create');
+
+//items_Aarooran stop//
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+

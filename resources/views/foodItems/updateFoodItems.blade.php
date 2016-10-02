@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="jumbotron text-center">
-      <h1>Add</h1>
+      <h1>Update</h1>
       <p>Food Items</p>
     </div>
     <div class="container">
