@@ -49,11 +49,11 @@ class Authenticate {
 			if($user->role == 'admin') {
 				return new RedirectResponse(url('/admin'));
 			}
-			else if($user->role == 'cashire'){
+			else if($user->role == 'cashier'){
 				return new RedirectResponse(url('/cashier/dashboard'));
 			}
 			else if($user->role == 'student'){
-				return new RedirectResponse(url('/cashier/dashboard')); // To be edited
+				return new RedirectResponse(url('/student/dashboard')); // To be edited
 			}
 			else{
 				$next($request);

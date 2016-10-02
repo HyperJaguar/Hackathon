@@ -3,6 +3,8 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\registerUser;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller {
@@ -17,6 +19,15 @@ class AdminController extends Controller {
 		return view('admin.admin_main');
 	}
 
+	public function register(registerUser $data){
+		$name= $data->name;
+		$email= $data->email;
+		$password= $data->password;
+		$itNumber=$data->itNumber;
+		$role=$data->role;
+		$datavalue=array("name" => $name,"email" =>$email,"password"=>bcrypt($password),'itNumber'=> $itNumber,"role"=> $role );
+		User::create($datavalue);
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *
