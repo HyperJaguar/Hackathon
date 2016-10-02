@@ -2,6 +2,7 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\RedirectResponse;
 
 class Authenticate {
 
@@ -41,6 +42,21 @@ class Authenticate {
 			else
 			{
 				return redirect()->guest('auth/login');
+			}
+		}
+		else {
+			$user = $this->auth->user();
+			if($user->role == 'admin') {
+				return new RedirectResponse(url('/admin'));
+			}
+			else if($user->role == 'cashire'){
+				return new RedirectResponse(url('/cashier/dashboard'));
+			}
+			else if($user->role == 'student'){
+				return new RedirectResponse(url('/cashier/dashboard')); // To be edited
+			}
+			else{
+				$next($request);
 			}
 		}
 
