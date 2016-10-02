@@ -4,13 +4,27 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use DB;
 
 class cashierController extends Controller {
 
 
     public function getDashboard()
     {
-        return view('cashier_Abhayan.dashboard');
+
+
+
+        $newOrders = DB::table('orders')->where('status', 'new')
+            ->join('order_items', 'orders.order_id','=', 'order_items.order_id')
+            ->get();
+
+        $countNewOrders = DB::table('orders')->where('status', 'new')->count();
+
+
+
+
+        return view('cashier_Abhayan.dashboard')->with('countNewOrders',$countNewOrders)
+                                                ->with('newOrders',$newOrders);
     }
 
 
